@@ -1,0 +1,29 @@
+<svg viewBox="0 0 276 184" xmlns="http://www.w3.org/2000/svg">
+ <filter id="grayscale">
+    <feColorMatrix values="0.2126 0.7152 0.0722 0 0
+                       0.2126 0.7152 0.0722 0 0
+                       0.2126 0.7152 0.0722 0 0
+                       0 0 0 1 0" type="matrix"/>
+  </filter>
+  <filter id="invert">
+    <feComponentTransfer>
+        <feFuncR tableValues="1 0" type="table"/>
+        <feFuncG tableValues="1 0" type="table"/>
+        <feFuncB tableValues="1 0" type="table"/>
+    </feComponentTransfer>
+ </filter>
+ <filter id="grayscaleAndInvert">
+    <feColorMatrix values="0.2126 0.7152 0.0722 0 0
+                       0.2126 0.7152 0.0722 0 0
+                       0.2126 0.7152 0.0722 0 0
+                       0 0 0 1 0" type="matrix"/>
+    <feComponentTransfer>
+        <feFuncR tableValues="1 0" type="table"/>
+        <feFuncG tableValues="1 0" type="table"/>
+        <feFuncB tableValues="1 0" type="table"/>
+    </feComponentTransfer>
+ </filter>
+ <filter id="blur">
+	<feGaussianBlur stdDeviation="3" />
+ </filter>
+</svg>

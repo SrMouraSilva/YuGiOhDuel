@@ -1,0 +1,171 @@
+/* Regras:
+============================================================/
+A carta é composta por 3 partes
+ - Div Before: A parte de trás - Desenho
+ - Div After : A parte da frente - Fundo branco
+ - Div Img   : O desenho da carta
+
+Z-index deve respeitar a segunte ordem:
+ - 0: O que fica mais atrás
+ - 1: Sempre o desenho da carta
+ - 2: O que deve ficar de frente por enquanto
+
+Por exemplo, se uma carta está de defesa para baixo:
+ before deve ter z-index 2
+ img    deve ter z-index 1
+
+Se uma carta está de defesa para cima:
+ before deve ter z-index 0
+ img    deve ter z-index 1
+
+/* CSS Resets
+============================================================*/
+* {
+	box-sizing: border-box !important;
+}
+
+/* ///////////////////////////////////////////////////////*/
+/* Mão
+/* ///////////////////////////////////////////////////////*/
+body {
+	background-image: url("../../YuGiOh.jpg");
+}
+.mao {
+	/*margin-top:-80px;*/
+}
+	.mao[data-owner="sua"] ul {
+		width: 945px;
+		margin: 0 auto;
+	}
+	.mao[data-owner="oponente"] ul {
+		width: 580px;
+		margin: 0 auto;
+	}
+	.mao li {
+		text-align: center;
+		vertical-align: middle;
+		display: table-cell;
+	}
+	.mao[data-owner="sua"] .card {
+		width: 150px;
+		transform: translateZ(200px);
+	}
+	.mao[data-owner="oponente"] .card {
+		width: 58px;
+		transform: translateZ(-600px);
+	}
+
+/* ///////////////////////////////////////////////////////*/
+/* Campo
+/* ///////////////////////////////////////////////////////*/
+#campo {
+	margin-top: -240px;
+}
+#campo .cartas li {
+	text-align: center;
+	vertical-align: middle;
+
+	padding: 20px 50px 0px 30px;
+	border: 5px solid #A08264;
+
+	min-width: 200px;
+	height: 200px;
+	display: table-cell;
+
+	background-color: rgba(72, 48, 22, 0.2);
+
+	box-shadow: 1px 15px 16px rgba(0, 0, 0, 0.5);
+}
+
+
+#campo .cartas ul {
+	perspective: 1000px;
+	margin: 0 auto;
+	width: 1245px;/*1000px;*/
+}
+#campo .cartas li {
+	transform: rotateX(40deg) translateZ(0px);
+}
+#campo [data-owner="oponente"] li {
+	transform: rotateX(222deg) translateZ(0px);
+}
+
+	#campo [data-owner="oponente"] .magicas li {
+		transform: rotateX(230deg) translateZ(209px) translateY(90px)
+	}
+	#campo [data-owner="voce"] .monstros li {
+		transform: rotateX(48deg) translateZ(-200px) translateY(-85px);
+	}
+	#campo .cartas img {
+		height: 100%;
+	}
+
+
+#campo [data-owner="voce"] {
+	margin-top: -200px;
+}
+#campo [data-owner="oponente"] {
+	perspective: 1000px;
+	margin-top: -120px;
+}
+	#campo [data-owner="oponente"] .cartas {
+		transform: translateZ(-480px);
+	}
+
+/* ///////////////////////////////////////////////////////*/
+/* Carta - Container
+/* ///////////////////////////////////////////////////////*/
+.container {
+	perspective: 800px;
+}
+	.container::before {
+		position: relative;
+		content: "";
+	}
+
+/* ///////////////////////////////////////////////////////*/
+/* Carta
+/* ///////////////////////////////////////////////////////*/
+.card {
+  	/*position: absolute;*/
+}
+	.card::before, .card::after, .card img {
+		position: relative;
+	}
+
+	.card::before {
+		content: url("../img/0.jpg");
+	}
+	.card::after {
+		content: url("../img/-1.jpg");
+		float: left;
+		margin-top: -243px;
+	    z-index: 0;
+	}
+	.card img {
+		margin-top: -243px;
+		min-height: 220px;
+		transform: rotateY( 180deg );
+		z-index: 1;
+	}
+
+
+/* ///////////////////////////////////////////////////////*/
+/* Campo
+/* ///////////////////////////////////////////////////////*/
+/* Modo de batalha */
+[data-view="back"][data-state="defesa"] { transform: rotate(90deg); }
+[data-view="back"][data-state="ataque"] { }
+
+/* Para cima */
+[data-view="front"][data-state="ataque"] { transform: rotateY(180deg); }
+[data-view="front"][data-state="defesa"] { transform: rotate(90deg)   rotateY( 180deg );}
+
+/* Para baixo */
+[data-view="back"] img {
+	opacity: 0 !important;
+}
+
+/* Capa */
+[data-view="front"]::before { z-index: 0; }
+[data-view= "back"]::before { z-index: 2; }
